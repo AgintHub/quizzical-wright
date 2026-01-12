@@ -11,27 +11,26 @@ nodes:
     - select_layout_style
     nodes_dependent_on: []
     output_structure:
-    - description: Human‑readable name of the selected color scheme (e.g., 'Vibrant
-        Summer', 'Minimalist Night')
+    - description: Human‑readable name of the selected color scheme
       key: color_scheme_name
       type: str
-    - description: Hex code of the primary color used throughout the app (e.g., '#FF5733')
+    - description: Hex code of the primary color (e.g., "#FF5733")
       key: primary_color_hex
       type: str
-    - description: Hex code of the secondary color used for accents and highlights
+    - description: Hex code of the secondary color
       key: secondary_color_hex
       type: str
-    - description: Hex code of the accent color used sparingly for calls‑to‑action
-        or emphasis
+    - description: Hex code of the accent color
       key: accent_color_hex
       type: str
-    - description: List of any additional hex color codes that complement the main
-        scheme (optional)
-      key: additional_colors_hex
+    - description: List of hex codes representing the full color palette
+      key: color_palette
       type: List[str]
-    - description: Flag indicating whether the chosen scheme meets the app's visual
-        guidelines and accessibility requirements
-      key: is_valid
+    - description: Contrast ratio rating (WCAG) for the primary and secondary colors
+      key: color_contrast_rating
+      type: float
+    - description: Whether the selected scheme meets accessibility and branding criteria
+      key: is_color_scheme_valid
       type: bool
     prompt: Select a color scheme that reflects the app's personality and style
   choose_imagery_style:
@@ -43,10 +42,23 @@ nodes:
     - select_layout_style
     nodes_dependent_on: []
     output_structure:
-    - description: Selected imagery style that aligns with the app's visual style
-        and target audience
+    - description: Name of the selected imagery style (e.g., 'modern minimalistic',
+        'vibrant lifestyle')
       key: imagery_style
       type: str
+    - description: Brief description of the imagery style and its visual characteristics
+      key: style_description
+      type: str
+    - description: List of visual categories or themes that fit the selected style
+        (e.g., 'product close-ups', 'lifestyle shots')
+      key: style_categories
+      type: List[str]
+    - description: Whether the selected style aligns with the target audience's preferences
+      key: target_audience_consistency
+      type: bool
+    - description: Estimated number of image assets needed to cover the app's features
+      key: recommended_image_count
+      type: int
     prompt: Select an imagery style that aligns with the app's visual style and target
       audience
   create_asset_library:
@@ -59,28 +71,24 @@ nodes:
     - choose_imagery_style
     nodes_dependent_on: []
     output_structure:
-    - description: Name of the asset library
-      key: library_name
-      type: str
-    - description: Number of images included in the library
-      key: total_images
-      type: int
-    - description: Number of graphic assets included in the library
-      key: total_graphics
-      type: int
-    - description: List of image file formats used (e.g., png, jpg, svg)
-      key: image_formats
+    - description: Names of the assets in the library.
+      key: asset_names
       type: List[str]
-    - description: List of graphic file formats used (e.g., svg, ai, eps)
-      key: graphic_formats
+    - description: Types of assets (e.g., illustration, icon, photo).
+      key: asset_types
       type: List[str]
-    - description: Score (0 to 1) indicating how well the library aligns with the
-        chosen color scheme and imagery style
-      key: theme_alignment_score
-      type: float
-    - description: Brief textual description of the library contents
-      key: description
-      type: str
+    - description: Brief descriptions of each asset.
+      key: asset_descriptions
+      type: List[str]
+    - description: Public URLs where each asset can be accessed.
+      key: asset_urls
+      type: List[str]
+    - description: Style tags that describe the visual style of the assets.
+      key: style_tags
+      type: List[str]
+    - description: Total number of assets created.
+      key: total_assets
+      type: int
     prompt: Develop a library of images and graphics for the app
   create_high-fidelity_prototype:
     agent: false
@@ -91,26 +99,31 @@ nodes:
     - decide_navigation_structure
     nodes_dependent_on: []
     output_structure:
-    - description: File system path or URL where the prototype file is stored
+    - description: File path or URL where the prototype is stored
       key: prototype_file_path
       type: str
-    - description: Brief textual description summarizing the prototype’s purpose and
-        scope
-      key: prototype_description
-      type: str
-    - description: List of all key features implemented in the prototype
-      key: prototype_features_list
-      type: List[str]
-    - description: Total number of interactive elements (e.g., buttons, links) in
-        the prototype
-      key: prototype_interactions_count
+    - description: Whether the prototype supports interactive navigation
+      key: prototype_interactive
+      type: bool
+    - description: Number of distinct features implemented in the prototype
+      key: prototype_features_count
       type: int
-    - description: Estimated quality score of the prototype on a scale of 0.0 to 1.0
+    - description: Overall quality rating of the prototype on a scale from 0.0 to
+        1.0
       key: prototype_quality_score
       type: float
-    - description: Indicates whether the prototype supports full interactive functionality
-      key: is_interactive
-      type: bool
+    - description: List of identified issues or bugs in the prototype
+      key: prototype_issues_found
+      type: List[str]
+    - description: Number of test cases that passed successfully
+      key: prototype_test_cases_passed
+      type: int
+    - description: Total number of test cases executed
+      key: prototype_test_cases_total
+      type: int
+    - description: Estimated time in hours to complete the prototype
+      key: prototype_time_estimate_hours
+      type: float
     prompt: Create a detailed, interactive prototype of the app
   create_sitemap:
     agent: false
@@ -121,21 +134,17 @@ nodes:
     - define_app_purpose
     nodes_dependent_on: []
     output_structure:
-    - description: List of all page names in the sitemap.
-      key: page_list
+    - description: Names of the top-level sections in the sitemap.
+      key: section_names
       type: List[str]
-    - description: Hierarchical representation of pages, each string showing the path
-        from root to the page (e.g., 'Home > Products > Product Detail').
-      key: page_hierarchy
-      type: List[str]
-    - description: Total number of pages in the sitemap.
-      key: total_pages
+    - description: Total number of sections in the sitemap.
+      key: section_count
       type: int
     - description: Whether the sitemap follows a logical and easy-to-use structure.
       key: is_valid_structure
       type: bool
-    - description: List of main features or sections represented in the sitemap.
-      key: main_features
+    - description: List of primary pages directly under the root section.
+      key: primary_pages
       type: List[str]
     prompt: Create a detailed sitemap that outlines the app's content and features
   create_typography_guide:
@@ -147,32 +156,33 @@ nodes:
     - select_typography
     nodes_dependent_on: []
     output_structure:
-    - description: The title of the typography guide
-      key: guide_name
+    - description: Name of the selected typography system.
+      key: typography_system_name
       type: str
-    - description: List of font families designated for heading styles
-      key: heading_font_families
+    - description: List of font families recommended for headings, body, and other
+        text elements.
+      key: font_families
       type: List[str]
-    - description: List of font families designated for body text
-      key: body_font_families
-      type: List[str]
-    - description: Names of heading styles (e.g., H1, H2, H3) defined in the guide
+    - description: Guidelines for heading styles (e.g., H1, H2) including size, weight,
+        and line height.
       key: heading_styles
       type: List[str]
-    - description: Names of body text styles (e.g., paragraph, caption, button) defined
-        in the guide
-      key: body_styles
+    - description: Guidelines for body text styles including size, weight, and line
+        height.
+      key: body_text_styles
       type: List[str]
-    - description: Hex codes or color names used for text, links, and accents
-      key: color_palette_for_typography
-      type: List[str]
-    - description: Guidelines for line height, letter spacing, and paragraph spacing
-      key: spacing_guidelines
-      type: str
-    - description: Sample code snippets or visual examples showing the typography
-        applied
+    - description: Recommended line spacing (leading) for body text.
+      key: line_spacing
+      type: float
+    - description: Recommended paragraph spacing (margin) between blocks of text.
+      key: paragraph_spacing
+      type: float
+    - description: Sample uses of typography styles in UI components.
       key: usage_examples
-      type: str
+      type: List[str]
+    - description: Whether the guide ensures consistency across the app.
+      key: is_consistent
+      type: bool
     prompt: Create a detailed guide for using the chosen typography system
   decide_navigation_structure:
     agent: false
@@ -184,19 +194,21 @@ nodes:
     - create_sitemap
     nodes_dependent_on: []
     output_structure:
-    - description: List of top-level navigation sections in the app
-      key: top_level_sections
+    - description: Names of top-level navigation sections
+      key: nav_items
       type: List[str]
-    - description: List of sub-navigation items grouped under each top-level section
-      key: sub_navigation_items
-      type: List[str]
-    - description: Maximum depth of the navigation hierarchy (e.g., 2 for top-level
-        + one sub-level)
-      key: navigation_depth
+    - description: Maximum depth of the navigation hierarchy
+      key: nav_hierarchy_depth
       type: int
-    - description: Guiding principles or rules applied to the navigation design
-      key: navigation_principles
+    - description: Display labels for each navigation item
+      key: nav_labels
       type: List[str]
+    - description: Link identifiers (e.g., route names) for each navigation item
+      key: nav_links
+      type: List[str]
+    - description: Brief description of the overall navigation structure
+      key: nav_overview
+      type: str
     prompt: Design an intuitive navigation system for the app
   define_app_purpose:
     agent: false
@@ -205,18 +217,21 @@ nodes:
     nodes_depended_on: []
     nodes_dependent_on: []
     output_structure:
-    - description: A concise statement of the app's primary purpose
-      key: purpose
+    - description: High-level purpose of the shopping app, e.g., 'to provide a seamless
+        online shopping experience for fashion items'
+      key: app_purpose
       type: str
-    - description: A list of the main functional features the app will provide
+    - description: List of core features that the app must include, e.g., 'product
+        catalog', 'shopping cart', 'checkout', 'user reviews'
       key: core_features
       type: List[str]
-    - description: A description of the primary user group the app is designed for
+    - description: Primary user demographic or market segment the app targets
       key: target_audience
       type: str
-    - description: The revenue or monetization strategy for the app
-      key: business_model
-      type: str
+    - description: Key business objectives the app aims to achieve, e.g., 'increase
+        conversion rate', 'reduce cart abandonment'
+      key: business_goals
+      type: List[str]
     prompt: Define the shopping app's purpose and core features
   refine_app_icons:
     agent: false
@@ -227,21 +242,20 @@ nodes:
     - create_asset_library
     nodes_dependent_on: []
     output_structure:
-    - description: List of filenames for the refined icons
-      key: refined_icon_filenames
+    - description: List of file paths or URLs to the refined icon assets
+      key: refined_icon_files
       type: List[str]
-    - description: List of filenames for the refined logos
-      key: refined_logo_filenames
+    - description: List of file paths or URLs to the refined logo assets
+      key: refined_logo_files
       type: List[str]
-    - description: True if all icons were refined successfully
-      key: icon_refinement_success
+    - description: A score between 0 and 1 indicating how well the refined assets
+        align with the defined style guidelines
+      key: compliance_score
+      type: float
+    - description: True if the refined assets meet the quality threshold, otherwise
+        False
+      key: output_quality
       type: bool
-    - description: True if all logos were refined successfully
-      key: logo_refinement_success
-      type: bool
-    - description: Total number of assets (icons + logos) refined
-      key: total_refined_assets
-      type: int
     prompt: Design high-quality icons and logos that reflect the app's style and personality
   select_layout_style:
     agent: false
@@ -252,19 +266,29 @@ nodes:
     - define_app_purpose
     nodes_dependent_on: []
     output_structure:
-    - description: Name of the selected layout style.
-      key: layout_style
+    - description: The name or title of the selected layout style
+      key: layout_style_name
       type: str
-    - description: Brief description of the selected layout style.
+    - description: A brief description of the visual characteristics of the layout
+        style
       key: layout_style_description
       type: str
-    - description: Score (0-1) indicating how well the selected layout matches the
-        target audience preferences.
-      key: audience_match_score
-      type: float
-    - description: List of alternative layout styles considered.
-      key: alternative_layouts
+    - description: The primary user group or demographic that the layout style is
+        designed for
+      key: target_audience
+      type: str
+    - description: A list of color names or hex codes that complement the chosen layout
+        style
+      key: recommended_color_palette
       type: List[str]
+    - description: The typography system (e.g., font family, weight hierarchy) that
+        aligns with the layout style
+      key: recommended_typography_system
+      type: str
+    - description: The grid system (e.g., columns, gutters, breakpoints) used to arrange
+        UI elements in the layout
+      key: layout_grid_structure
+      type: str
     prompt: Select a layout style that aligns with the app's purpose and target audience
   select_typography:
     agent: false
@@ -275,24 +299,22 @@ nodes:
     - select_layout_style
     nodes_dependent_on: []
     output_structure:
-    - description: Primary typeface family selected for the app.
+    - description: Primary font family selected for the app
       key: typography_family
       type: str
-    - description: List of font weights (e.g., 'regular', 'bold', 'semibold') used
-        in the typography system.
+    - description: List of font weights (e.g., regular, bold) used
       key: font_weights
       type: List[str]
-    - description: Recommended line-height factor relative to font size.
+    - description: Base font size in pixels
+      key: base_font_size
+      type: int
+    - description: Line height multiplier for body text
       key: line_height
       type: float
-    - description: Minimum and maximum font sizes (in pixels) used across the app.
-      key: font_size_range
-      type: List[int]
-    - description: Default letter spacing (in em) for body text.
-      key: letter_spacing
-      type: float
-    - description: Sample text styles (e.g., 'h1', 'body', 'caption') with their corresponding
-        font size and weight.
-      key: text_style_examples
+    - description: True if the selected typography is serif, False otherwise
+      key: is_serif
+      type: bool
+    - description: List of fallback font families
+      key: fallback_fonts
       type: List[str]
     prompt: Select a typography system that aligns with the app's style
