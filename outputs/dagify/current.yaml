@@ -1,4 +1,4 @@
-dag_type: typed
+dag_type: spec
 description: Generated workflow from UI.
 name: shopping_app_code_base
 nodes:
@@ -23,6 +23,33 @@ nodes:
     - description: List of supported payment methods (e.g., credit card, PayPal, etc.)
       key: supported_payment_methods
       type: List[str]
+    prd:
+      conceptual_info: This node integrates a payment gateway (e.g., Stripe or PayPal)
+        into the shopping app, implementing transaction processing and receipt generation
+        logic.
+      docstring:
+        examples:
+        - lines:
+          - result = add_payment_integration()
+          output: "{\n  \"payment_gateway\": \"Stripe\",\n  \"transaction_processing_status\"\
+            : true,\n  \"receipt_generation_status\": true,\n  \"supported_payment_methods\"\
+            : [\"credit_card\", \"debit_card\", \"paypal\"]\n}"
+        - lines:
+          - result = add_payment_integration()
+          output: "{\n  \"payment_gateway\": \"PayPal\",\n  \"transaction_processing_status\"\
+            : true,\n  \"receipt_generation_status\": false,\n  \"supported_payment_methods\"\
+            : [\"paypal\", \"credit_card\"]\n}"
+        parameters: []
+        raises:
+        - description: Raised if the payment gateway configuration is missing or invalid.
+          type: ValueError
+        returns:
+          description: A dictionary containing the payment gateway name, boolean flags
+            for transaction processing and receipt generation success, and a list
+            of supported payment methods.
+          type: dict
+        summary: Integrate a payment gateway into the shopping app and return integration
+          status.
     prompt: Add payment integration using a suitable payment gateway (e.g., Stripe,
       PayPal). Focus on implementing the necessary logic for processing transactions
       and sending receipts.
@@ -44,6 +71,33 @@ nodes:
     - description: A 2-sentence justification for the chosen tech stack and framework
       key: justification
       type: str
+    prd:
+      conceptual_info: This node is responsible for choosing a suitable tech stack
+        and framework for the shopping app based on the identified features.
+      docstring:
+        examples:
+        - lines:
+          - choose_framework(essential_features=["product listing", "search", "filter"])
+          - 'print(output[''tech_stack''])  # Output: ''React Native'''
+          - 'print(output[''framework''])  # Output: ''React'''
+          - 'print(output[''justification''])  # Output: ''React Native is chosen
+            for its cross-platform compatibility and React for its simplicity.'''
+          output: '{''tech_stack'': ''React Native'', ''framework'': ''React'', ''justification'':
+            ''React Native is chosen for its cross-platform compatibility and React
+            for its simplicity.''}'
+        parameters:
+        - description: List of essential features for the shopping app
+          name: essential_features
+          type: List[str]
+        raises:
+        - description: If the input features are empty or invalid
+          type: ValueError
+        returns:
+          description: A dictionary containing the chosen tech stack, framework, and
+            justification
+          type: dict
+        summary: Selects a suitable tech stack and framework for the shopping app
+          based on the provided features.
     prompt: Based on the identified features, select and specify a suitable tech stack
       (e.g., React Native, Flutter) and framework for building the shopping app. Provide
       a 2-sentence justification.
@@ -70,6 +124,43 @@ nodes:
         accessibility)
       key: ui_component_features
       type: List[str]
+    prd:
+      conceptual_info: This node is responsible for creating a basic UI component
+        for the shopping app, focusing on UI/UX design.
+      docstring:
+        examples:
+        - lines:
+          - create_ui_component(auth_system_type='local', login_functionality=True,
+            registration_functionality=True, logout_functionality=True, authorization_methods=['session-based'])
+          output: '{''ui_component_name'': ''product_card'', ''ui_component_library'':
+            ''Material-UI'', ''ui_component_screenshot'': ''screenshot.png'', ''ui_component_features'':
+            [''responsiveness'', ''accessibility'']}'
+        parameters:
+        - description: Type of authentication system implemented (e.g., local, OAuth,
+            OpenID)
+          name: auth_system_type
+          type: str
+        - description: Whether login functionality is successfully implemented
+          name: login_functionality
+          type: bool
+        - description: Whether registration functionality is successfully implemented
+          name: registration_functionality
+          type: bool
+        - description: Whether logout functionality is successfully implemented
+          name: logout_functionality
+          type: bool
+        - description: List of authorization methods used (e.g., session-based, token-based)
+          name: authorization_methods
+          type: List[str]
+        raises:
+        - description: If the authentication system type is not supported.
+          type: ValueError
+        returns:
+          description: A dictionary containing the UI component's name, library, screenshot,
+            and features.
+          type: dict
+        summary: This function creates a simple UI component using a suitable library
+          or framework and returns its details.
     prompt: Develop a simple UI component (e.g., card, list item) using a suitable
       library or framework (e.g., Material-UI, Bootstrap). Focus only on UI/UX design.
       Provide a screenshot of the created component.
@@ -98,6 +189,33 @@ nodes:
     - description: List of authorization methods used (e.g., session-based, token-based)
       key: authorization_methods
       type: List[str]
+    prd:
+      conceptual_info: Implement a basic customer authentication system for the shopping
+        app using a library or framework function.
+      docstring:
+        examples:
+        - lines:
+          - 'payment_integration_output = {''payment_gateway'': ''Stripe'', ''transaction_processing_status'':
+            True, ''receipt_generation_status'': True, ''supported_payment_methods'':
+            [''credit card'', ''PayPal'']}'
+          - auth_output = implement_customer_auth(payment_integration_output)
+          output: '{''auth_system_type'': ''local'', ''login_functionality'': True,
+            ''registration_functionality'': True, ''logout_functionality'': True,
+            ''authorization_methods'': [''session-based'', ''token-based'']}'
+        parameters:
+        - description: Output from the payment integration node
+          name: payment_integration_output
+          type: dict
+        raises:
+        - description: If the payment integration output is invalid
+          type: ValueError
+        returns:
+          description: A dictionary containing the authentication system type, login
+            functionality status, registration functionality status, logout functionality
+            status, and authorization methods
+          type: dict
+        summary: Implements a basic customer authentication system for the shopping
+          app.
     prompt: Use a library or framework function to implement a basic customer authentication
       (e.g., login, registration, logout). Focus only on authentication and authorization.
       Provide a 1-2 sentence justification.
@@ -119,8 +237,40 @@ nodes:
       key: payment_processing_status
       type: str
     - description: List of core features implemented in the UI component
-      key: core_featuresimplemented
+      key: core_features_implemented
       type: List[str]
+    prd:
+      conceptual_info: Integrate a UI component into a shopping app by rendering product
+        listings and handling payment processing.
+      docstring:
+        examples:
+        - lines:
+          - integrate_ui_component('product_card', 'Material-UI', 'screenshot.png',
+            ['responsiveness', 'accessibility'])
+          output: '{''integrated_ui_screenshot'': ''integrated_screenshot.png'', ''rendered_product_listing'':
+            True, ''payment_processing_status'': ''success'', ''core_features_implemented'':
+            [''responsiveness'', ''accessibility'']}'
+        parameters:
+        - description: Name of the UI component to integrate
+          name: ui_component_name
+          type: str
+        - description: Library or framework used to develop the UI component
+          name: ui_component_library
+          type: str
+        - description: Screenshot of the created UI component
+          name: ui_component_screenshot
+          type: str
+        - description: List of features implemented in the UI component
+          name: ui_component_features
+          type: List[str]
+        raises:
+        - description: If the UI component name or library is empty
+          type: ValueError
+        returns:
+          description: Dictionary containing the integrated UI screenshot, product
+            listing status, payment processing status, and core features implemented
+          type: dict
+        summary: Integrate a UI component into a shopping app.
     prompt: Use the developed logic to integrate the UI component (e.g., render product
       listing, handle payment processing). Focus on integrating core features and
       functionality. Provide a screenshot of the integrated UI.
@@ -138,6 +288,27 @@ nodes:
     - description: Total number of essential features
       key: feature_count
       type: int
+    prd:
+      conceptual_info: Provides a concise, numbered list of core functionalities required
+        for a functional shopping application, serving as the foundation for subsequent
+        design and implementation decisions.
+      docstring:
+        examples:
+        - lines:
+          - features = plan_shopping_app_features()
+          - print(features)
+          output: '{"essential_features": ["Product listing", "Search", "Filter",
+            "Payment integration", "Customer authentication"], "feature_count": 5}'
+        parameters: []
+        raises:
+        - description: If the feature generation logic fails to produce at least one
+            feature.
+          type: ValueError
+        returns:
+          description: Dictionary containing essential_features (list of strings)
+            and feature_count (int).
+          type: dict
+        summary: Generates a list of essential features for a basic shopping app.
     prompt: Describe the must-have features for a basic shopping app. Provide a numbered
       list.
   set_up_project_structure:
@@ -160,6 +331,37 @@ nodes:
     - description: Whether the project structure is valid
       key: is_valid
       type: bool
+    prd:
+      conceptual_info: This node is responsible for creating a basic directory structure
+        for the shopping app project based on the chosen framework.
+      docstring:
+        examples:
+        - lines:
+          - set_up_project_structure(chosen_framework='React Native', project_name='ShoppingApp')
+          - 'print(output[''project_name''])  # Output: ShoppingApp'
+          - 'print(output[''directory_structure''])  # Output: [''src'', ''tests'',
+            ''docs'']'
+          - 'print(output[''file_list''])  # Output: [''index.js'', ''App.js'', ''package.json'']'
+          - 'print(output[''is_valid''])  # Output: True'
+          output: '{''project_name'': ''ShoppingApp'', ''directory_structure'': [''src'',
+            ''tests'', ''docs''], ''file_list'': [''index.js'', ''App.js'', ''package.json''],
+            ''is_valid'': True}'
+        parameters:
+        - description: The chosen framework for the shopping app
+          name: chosen_framework
+          type: str
+        - description: The name of the project
+          name: project_name
+          type: str
+        raises:
+        - description: If the chosen framework or project name is invalid
+          type: ValueError
+        returns:
+          description: A dictionary containing the project name, directory structure,
+            file list, and validity of the project structure
+          type: dict
+        summary: Sets up a basic project structure for the shopping app based on the
+          chosen framework.
     prompt: Using the chosen framework, outline a basic project structure (e.g., folders,
       files). Provide a numbered list of key directories and their contents.
   write_product_listing_logic:
@@ -183,6 +385,52 @@ nodes:
     - description: Whether the product listing logic was successfully implemented
       key: is_product_listing_successful
       type: bool
+    prd:
+      conceptual_info: This node fetches product data from the backend API, processes
+        it into displayable lists, and signals success or failure of the listing operation.
+      docstring:
+        examples:
+        - lines:
+          - output = write_product_listing_logic(
+          - '    project_name=''ShopApp'','
+          - '    directory_structure=[''src'', ''tests''],'
+          - '    file_list=[''main.py'', ''utils.py''],'
+          - '    is_valid=True'
+          - )
+          output: "{\n  'product_list': [],\n  'product_descriptions': [],\n  'product_prices':\
+            \ [],\n  'is_product_listing_successful': True\n}"
+        - lines:
+          - output = write_product_listing_logic(
+          - '    project_name=''ShopApp'','
+          - '    directory_structure=[''src'', ''tests''],'
+          - '    file_list=[''main.py'', ''utils.py''],'
+          - '    is_valid=True'
+          - )
+          output: "{\n  'product_list': ['T-Shirt', 'Jeans'],\n  'product_descriptions':\
+            \ ['Cotton T-Shirt', 'Denim Jeans'],\n  'product_prices': [19.99, 49.99],\n\
+            \  'is_product_listing_successful': True\n}"
+        parameters:
+        - description: Name of the shopping app project.
+          name: project_name
+          type: str
+        - description: List of key directories in the project structure.
+          name: directory_structure
+          type: List[str]
+        - description: List of key files in the project structure.
+          name: file_list
+          type: List[str]
+        - description: Validity flag of the project structure generated by set_up_project_structure.
+          name: is_valid
+          type: bool
+        raises:
+        - description: Raised when the project structure is invalid (is_valid is False).
+          type: ValueError
+        returns:
+          description: A dictionary containing product_list, product_descriptions,
+            product_prices, and is_product_listing_successful.
+          type: dict
+        summary: Fetches product data and returns structured lists of names, descriptions,
+          and prices.
     prompt: Develop the business logic for listing products (e.g., fetching data from
       API, displaying product information). Focus only on product listing. Use a suitable
       programming language and the set framework.
