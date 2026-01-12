@@ -1,10 +1,46 @@
-dag_type: spec
+dag_type: stub
 description: Generated workflow from UI.
 name: shopping_app_code_base
 nodes:
   add_payment_integration:
     agent: false
+    code_node_type: stub
     description: Integrate a suitable payment gateway into the shopping app.
+    implementation: "from pydantic import BaseModel, Field\nfrom typing import List\n\
+      \n\nclass WriteProductListingLogicOutput(BaseModel):\n    \"\"\"Pydantic model\
+      \ for write_product_listing_logic node outputs.\"\"\"\n    product_list: List[str]\
+      \ = Field(..., description=\"List of product names\")\n    product_descriptions:\
+      \ List[str] = (\n        Field(..., description=\"List of product descriptions\"\
+      )\n    )\n    product_prices: List[float] = (\n        Field(..., description=\"\
+      List of product prices\")\n    )\n    is_product_listing_successful: bool =\
+      \ (\n        Field(..., description=\"Whether the product listing logic was\
+      \ successfully implemented\")\n    )\n\n\nclass AddPaymentIntegrationOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for add_payment_integration node outputs.\"\"\"\n\
+      \    payment_gateway: str = (\n        Field(..., description=\"The name of\
+      \ the integrated payment gateway\")\n    )\n    transaction_processing_status:\
+      \ bool = (\n        Field(..., description=\"Whether the transaction processing\
+      \ logic has been successfully implemented\")\n    )\n    receipt_generation_status:\
+      \ bool = (\n        Field(..., description=\"Whether the receipt generation\
+      \ logic has been successfully implemented\")\n    )\n    supported_payment_methods:\
+      \ List[str] = (\n        Field(..., description=\"List of supported payment\
+      \ methods (e.g., credit card, PayPal, etc.)\")\n    )\n\n\ndef add_payment_integration(write_product_listing_logic_input:\
+      \ WriteProductListingLogicOutput, **kwargs) -> AddPaymentIntegrationOutput:\n\
+      \    \"\"\"\n    Integrate a payment gateway into the shopping app and return\
+      \ integration\n    status.\n\n    Returns\n    -------\n    dict\n        A\
+      \ dictionary containing the payment gateway name, boolean flags for\n      \
+      \  transaction processing and receipt generation success, and a list of\n  \
+      \      supported payment methods.\n\n    Raises\n    ------\n    ValueError\n\
+      \        Raised if the payment gateway configuration is missing or invalid.\n\
+      \n    Examples\n    --------\n    >>> result = add_payment_integration()\n \
+      \   {\n      \"payment_gateway\": \"Stripe\",\n      \"transaction_processing_status\"\
+      : true,\n      \"receipt_generation_status\": true,\n      \"supported_payment_methods\"\
+      : [\"credit_card\", \"debit_card\", \"paypal\"]\n    }\n\n    >>> result = add_payment_integration()\n\
+      \    {\n      \"payment_gateway\": \"PayPal\",\n      \"transaction_processing_status\"\
+      : true,\n      \"receipt_generation_status\": false,\n      \"supported_payment_methods\"\
+      : [\"paypal\", \"credit_card\"]\n    }\n\n    \"\"\"\n    return AddPaymentIntegrationOutput(\n\
+      \        payment_gateway=\"\",\n        transaction_processing_status=False,\n\
+      \        receipt_generation_status=False,\n        supported_payment_methods=[],\n\
+      \    )"
     name: add_payment_integration
     nodes_depended_on:
     - write_product_listing_logic
@@ -53,9 +89,39 @@ nodes:
     prompt: Add payment integration using a suitable payment gateway (e.g., Stripe,
       PayPal). Focus on implementing the necessary logic for processing transactions
       and sending receipts.
+    shims: []
   choose_framework:
     agent: false
+    code_node_type: stub
     description: Select a suitable tech stack and framework for the shopping app.
+    implementation: "from pydantic import BaseModel, Field\nfrom typing import List\n\
+      \n\nclass PlanShoppingAppFeaturesOutput(BaseModel):\n    \"\"\"Pydantic model\
+      \ for plan_shopping_app_features node outputs.\"\"\"\n    essential_features:\
+      \ List[str] = (\n        Field(..., description=\"List of must-have features\
+      \ for a basic shopping app\")\n    )\n    feature_count: int = (\n        Field(...,\
+      \ description=\"Total number of essential features\")\n    )\n\n\nclass ChooseFrameworkOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for choose_framework node outputs.\"\"\"\n    tech_stack:\
+      \ str = (\n        Field(..., description=\"The chosen tech stack for the shopping\
+      \ app (e.g., React Native, Flutter)\")\n    )\n    framework: str = (\n    \
+      \    Field(..., description=\"The chosen framework for the shopping app\")\n\
+      \    )\n    justification: str = (\n        Field(..., description=\"A 2-sentence\
+      \ justification for the chosen tech stack and framework\")\n    )\n\n\ndef choose_framework(plan_shopping_app_features_input:\
+      \ PlanShoppingAppFeaturesOutput, **kwargs) -> ChooseFrameworkOutput:\n    \"\
+      \"\"\n    Selects a suitable tech stack and framework for the shopping app based\
+      \ on\n    the provided features.\n\n    Parameters\n    ----------\n    essential_features\
+      \ : List[str]\n        List of essential features for the shopping app\n\n \
+      \   Returns\n    -------\n    dict\n        A dictionary containing the chosen\
+      \ tech stack, framework, and\n        justification\n\n    Raises\n    ------\n\
+      \    ValueError\n        If the input features are empty or invalid\n\n    Examples\n\
+      \    --------\n    >>> choose_framework(essential_features=[\"product listing\"\
+      , \"search\",\n    \"filter\"])\n    >>> print(output['tech_stack'])  # Output:\
+      \ 'React Native'\n    >>> print(output['framework'])  # Output: 'React'\n  \
+      \  >>> print(output['justification'])  # Output: 'React Native is chosen for\n\
+      \    its cross-platform compatibility and React for its simplicity.'\n    {'tech_stack':\
+      \ 'React Native', 'framework': 'React', 'justification': 'React\n    Native\
+      \ is chosen for its cross-platform compatibility and React for its\n    simplicity.'}\n\
+      \n    \"\"\"\n    return ChooseFrameworkOutput(\n        tech_stack=\"\",\n\
+      \        framework=\"\",\n        justification=\"\",\n    )"
     name: choose_framework
     nodes_depended_on:
     - plan_shopping_app_features
@@ -101,9 +167,52 @@ nodes:
     prompt: Based on the identified features, select and specify a suitable tech stack
       (e.g., React Native, Flutter) and framework for building the shopping app. Provide
       a 2-sentence justification.
+    shims: []
   create_ui_component:
     agent: false
+    code_node_type: stub
     description: Design and create a basic UI component for the shopping app.
+    implementation: "from pydantic import BaseModel, Field\nfrom typing import List\n\
+      \n\nclass ImplementCustomerAuthOutput(BaseModel):\n    \"\"\"Pydantic model\
+      \ for implement_customer_auth node outputs.\"\"\"\n    auth_system_type: str\
+      \ = (\n        Field(..., description=\"Type of authentication system implemented\
+      \ (e.g., local, OAuth, OpenID)\")\n    )\n    login_functionality: bool = (\n\
+      \        Field(..., description=\"Whether login functionality is successfully\
+      \ implemented\")\n    )\n    registration_functionality: bool = (\n        Field(...,\
+      \ description=\"Whether registration functionality is successfully implemented\"\
+      )\n    )\n    logout_functionality: bool = (\n        Field(..., description=\"\
+      Whether logout functionality is successfully implemented\")\n    )\n    authorization_methods:\
+      \ List[str] = (\n        Field(..., description=\"List of authorization methods\
+      \ used (e.g., session-based, token-based)\")\n    )\n\n\nclass CreateUiComponentOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for create_ui_component node outputs.\"\"\"\n    ui_component_name:\
+      \ str = (\n        Field(..., description=\"Name of the UI component created\
+      \ (e.g., product card, navigation menu)\")\n    )\n    ui_component_library:\
+      \ str = (\n        Field(..., description=\"Library or framework used to develop\
+      \ the UI component (e.g., Material-UI, Bootstrap)\")\n    )\n    ui_component_screenshot:\
+      \ str = (\n        Field(..., description=\"Screenshot of the created UI component\"\
+      )\n    )\n    ui_component_features: List[str] = (\n        Field(..., description=\"\
+      List of features implemented in the UI component (e.g., responsiveness, accessibility)\"\
+      )\n    )\n\n\ndef create_ui_component(implement_customer_auth_input: ImplementCustomerAuthOutput,\
+      \ **kwargs) -> CreateUiComponentOutput:\n    \"\"\"\n    This function creates\
+      \ a simple UI component using a suitable library or\n    framework and returns\
+      \ its details.\n\n    Parameters\n    ----------\n    auth_system_type : str\n\
+      \        Type of authentication system implemented (e.g., local, OAuth,\n  \
+      \      OpenID)\n    login_functionality : bool\n        Whether login functionality\
+      \ is successfully implemented\n    registration_functionality : bool\n     \
+      \   Whether registration functionality is successfully implemented\n    logout_functionality\
+      \ : bool\n        Whether logout functionality is successfully implemented\n\
+      \    authorization_methods : List[str]\n        List of authorization methods\
+      \ used (e.g., session-based, token-\n        based)\n\n    Returns\n    -------\n\
+      \    dict\n        A dictionary containing the UI component's name, library,\n\
+      \        screenshot, and features.\n\n    Raises\n    ------\n    ValueError\n\
+      \        If the authentication system type is not supported.\n\n    Examples\n\
+      \    --------\n    >>> create_ui_component(auth_system_type='local', login_functionality=True,\n\
+      \    registration_functionality=True, logout_functionality=True,\n    authorization_methods=['session-based'])\n\
+      \    {'ui_component_name': 'product_card', 'ui_component_library': 'Material-UI',\n\
+      \    'ui_component_screenshot': 'screenshot.png', 'ui_component_features':\n\
+      \    ['responsiveness', 'accessibility']}\n\n    \"\"\"\n    return CreateUiComponentOutput(\n\
+      \        ui_component_name=\"\",\n        ui_component_library=\"\",\n     \
+      \   ui_component_screenshot=\"\",\n        ui_component_features=[],\n    )"
     name: create_ui_component
     nodes_depended_on:
     - implement_customer_auth
@@ -164,10 +273,51 @@ nodes:
     prompt: Develop a simple UI component (e.g., card, list item) using a suitable
       library or framework (e.g., Material-UI, Bootstrap). Focus only on UI/UX design.
       Provide a screenshot of the created component.
+    shims: []
   implement_customer_auth:
     agent: false
+    code_node_type: stub
     description: Implement a basic customer authentication system for the shopping
       app.
+    implementation: "from pydantic import BaseModel, Field\nfrom typing import List\n\
+      \n\nclass AddPaymentIntegrationOutput(BaseModel):\n    \"\"\"Pydantic model\
+      \ for add_payment_integration node outputs.\"\"\"\n    payment_gateway: str\
+      \ = (\n        Field(..., description=\"The name of the integrated payment gateway\"\
+      )\n    )\n    transaction_processing_status: bool = (\n        Field(..., description=\"\
+      Whether the transaction processing logic has been successfully implemented\"\
+      )\n    )\n    receipt_generation_status: bool = (\n        Field(..., description=\"\
+      Whether the receipt generation logic has been successfully implemented\")\n\
+      \    )\n    supported_payment_methods: List[str] = (\n        Field(..., description=\"\
+      List of supported payment methods (e.g., credit card, PayPal, etc.)\")\n   \
+      \ )\n\n\nclass ImplementCustomerAuthOutput(BaseModel):\n    \"\"\"Pydantic model\
+      \ for implement_customer_auth node outputs.\"\"\"\n    auth_system_type: str\
+      \ = (\n        Field(..., description=\"Type of authentication system implemented\
+      \ (e.g., local, OAuth, OpenID)\")\n    )\n    login_functionality: bool = (\n\
+      \        Field(..., description=\"Whether login functionality is successfully\
+      \ implemented\")\n    )\n    registration_functionality: bool = (\n        Field(...,\
+      \ description=\"Whether registration functionality is successfully implemented\"\
+      )\n    )\n    logout_functionality: bool = (\n        Field(..., description=\"\
+      Whether logout functionality is successfully implemented\")\n    )\n    authorization_methods:\
+      \ List[str] = (\n        Field(..., description=\"List of authorization methods\
+      \ used (e.g., session-based, token-based)\")\n    )\n\n\ndef implement_customer_auth(add_payment_integration_input:\
+      \ AddPaymentIntegrationOutput, **kwargs) -> ImplementCustomerAuthOutput:\n \
+      \   \"\"\"\n    Implements a basic customer authentication system for the shopping\
+      \ app.\n\n    Parameters\n    ----------\n    payment_integration_output : dict\n\
+      \        Output from the payment integration node\n\n    Returns\n    -------\n\
+      \    dict\n        A dictionary containing the authentication system type, login\n\
+      \        functionality status, registration functionality status, logout\n \
+      \       functionality status, and authorization methods\n\n    Raises\n    ------\n\
+      \    ValueError\n        If the payment integration output is invalid\n\n  \
+      \  Examples\n    --------\n    >>> payment_integration_output = {'payment_gateway':\
+      \ 'Stripe',\n    'transaction_processing_status': True, 'receipt_generation_status':\
+      \ True,\n    'supported_payment_methods': ['credit card', 'PayPal']}\n    >>>\
+      \ auth_output = implement_customer_auth(payment_integration_output)\n    {'auth_system_type':\
+      \ 'local', 'login_functionality': True,\n    'registration_functionality': True,\
+      \ 'logout_functionality': True,\n    'authorization_methods': ['session-based',\
+      \ 'token-based']}\n\n    \"\"\"\n    return ImplementCustomerAuthOutput(\n \
+      \       auth_system_type=\"\",\n        login_functionality=False,\n       \
+      \ registration_functionality=False,\n        logout_functionality=False,\n \
+      \       authorization_methods=[],\n    )"
     name: implement_customer_auth
     nodes_depended_on:
     - add_payment_integration
@@ -219,9 +369,48 @@ nodes:
     prompt: Use a library or framework function to implement a basic customer authentication
       (e.g., login, registration, logout). Focus only on authentication and authorization.
       Provide a 1-2 sentence justification.
+    shims: []
   integrate_ui_component:
     agent: false
+    code_node_type: stub
     description: Integrate the created UI component into the shopping app.
+    implementation: "from pydantic import BaseModel, Field\nfrom typing import List\n\
+      \n\nclass CreateUiComponentOutput(BaseModel):\n    \"\"\"Pydantic model for\
+      \ create_ui_component node outputs.\"\"\"\n    ui_component_name: str = (\n\
+      \        Field(..., description=\"Name of the UI component created (e.g., product\
+      \ card, navigation menu)\")\n    )\n    ui_component_library: str = (\n    \
+      \    Field(..., description=\"Library or framework used to develop the UI component\
+      \ (e.g., Material-UI, Bootstrap)\")\n    )\n    ui_component_screenshot: str\
+      \ = (\n        Field(..., description=\"Screenshot of the created UI component\"\
+      )\n    )\n    ui_component_features: List[str] = (\n        Field(..., description=\"\
+      List of features implemented in the UI component (e.g., responsiveness, accessibility)\"\
+      )\n    )\n\n\nclass IntegrateUiComponentOutput(BaseModel):\n    \"\"\"Pydantic\
+      \ model for integrate_ui_component node outputs.\"\"\"\n    integrated_ui_screenshot:\
+      \ str = (\n        Field(..., description=\"Screenshot of the integrated UI\
+      \ component\")\n    )\n    rendered_product_listing: bool = (\n        Field(...,\
+      \ description=\"Whether product listing is successfully rendered\")\n    )\n\
+      \    payment_processing_status: str = (\n        Field(..., description=\"Status\
+      \ of payment processing integration\")\n    )\n    core_features_implemented:\
+      \ List[str] = (\n        Field(..., description=\"List of core features implemented\
+      \ in the UI component\")\n    )\n\n\ndef integrate_ui_component(create_ui_component_input:\
+      \ CreateUiComponentOutput, **kwargs) -> IntegrateUiComponentOutput:\n    \"\"\
+      \"\n    Integrate a UI component into a shopping app.\n\n    Parameters\n  \
+      \  ----------\n    ui_component_name : str\n        Name of the UI component\
+      \ to integrate\n    ui_component_library : str\n        Library or framework\
+      \ used to develop the UI component\n    ui_component_screenshot : str\n    \
+      \    Screenshot of the created UI component\n    ui_component_features : List[str]\n\
+      \        List of features implemented in the UI component\n\n    Returns\n \
+      \   -------\n    dict\n        Dictionary containing the integrated UI screenshot,\
+      \ product listing\n        status, payment processing status, and core features\
+      \ implemented\n\n    Raises\n    ------\n    ValueError\n        If the UI component\
+      \ name or library is empty\n\n    Examples\n    --------\n    >>> integrate_ui_component('product_card',\
+      \ 'Material-UI', 'screenshot.png',\n    ['responsiveness', 'accessibility'])\n\
+      \    {'integrated_ui_screenshot': 'integrated_screenshot.png',\n    'rendered_product_listing':\
+      \ True, 'payment_processing_status': 'success',\n    'core_features_implemented':\
+      \ ['responsiveness', 'accessibility']}\n\n    \"\"\"\n    return IntegrateUiComponentOutput(\n\
+      \        integrated_ui_screenshot=\"\",\n        rendered_product_listing=False,\n\
+      \        payment_processing_status=\"\",\n        core_features_implemented=[],\n\
+      \    )"
     name: integrate_ui_component
     nodes_depended_on:
     - create_ui_component
@@ -274,10 +463,29 @@ nodes:
     prompt: Use the developed logic to integrate the UI component (e.g., render product
       listing, handle payment processing). Focus on integrating core features and
       functionality. Provide a screenshot of the integrated UI.
+    shims: []
   plan_shopping_app_features:
     agent: false
+    code_node_type: stub
     description: List essential features for a basic shopping app (e.g., product listing,
       search, filter, payment integration, customer authentication).
+    implementation: "from pydantic import BaseModel, Field\nfrom typing import List\n\
+      \n\nclass PlanShoppingAppFeaturesOutput(BaseModel):\n    \"\"\"Pydantic model\
+      \ for plan_shopping_app_features node outputs.\"\"\"\n    essential_features:\
+      \ List[str] = (\n        Field(..., description=\"List of must-have features\
+      \ for a basic shopping app\")\n    )\n    feature_count: int = (\n        Field(...,\
+      \ description=\"Total number of essential features\")\n    )\n\n\ndef plan_shopping_app_features(general_input:\
+      \ str, **kwargs) -> PlanShoppingAppFeaturesOutput:\n    \"\"\"\n    Generates\
+      \ a list of essential features for a basic shopping app.\n\n    Returns\n  \
+      \  -------\n    dict\n        Dictionary containing essential_features (list\
+      \ of strings) and\n        feature_count (int).\n\n    Raises\n    ------\n\
+      \    ValueError\n        If the feature generation logic fails to produce at\
+      \ least one\n        feature.\n\n    Examples\n    --------\n    >>> features\
+      \ = plan_shopping_app_features()\n    >>> print(features)\n    {\"essential_features\"\
+      : [\"Product listing\", \"Search\", \"Filter\", \"Payment\n    integration\"\
+      , \"Customer authentication\"], \"feature_count\": 5}\n\n    \"\"\"\n    return\
+      \ PlanShoppingAppFeaturesOutput(\n        essential_features=[],\n        feature_count=0,\n\
+      \    )"
     name: plan_shopping_app_features
     nodes_depended_on: []
     nodes_dependent_on: []
@@ -311,9 +519,44 @@ nodes:
         summary: Generates a list of essential features for a basic shopping app.
     prompt: Describe the must-have features for a basic shopping app. Provide a numbered
       list.
+    shims: []
   set_up_project_structure:
     agent: false
+    code_node_type: stub
     description: Create a basic directory structure for the shopping app project.
+    implementation: "from pydantic import BaseModel, Field\nfrom typing import List\n\
+      \n\nclass ChooseFrameworkOutput(BaseModel):\n    \"\"\"Pydantic model for choose_framework\
+      \ node outputs.\"\"\"\n    tech_stack: str = (\n        Field(..., description=\"\
+      The chosen tech stack for the shopping app (e.g., React Native, Flutter)\")\n\
+      \    )\n    framework: str = (\n        Field(..., description=\"The chosen\
+      \ framework for the shopping app\")\n    )\n    justification: str = (\n   \
+      \     Field(..., description=\"A 2-sentence justification for the chosen tech\
+      \ stack and framework\")\n    )\n\n\nclass SetUpProjectStructureOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for set_up_project_structure node outputs.\"\"\"\n\
+      \    project_name: str = Field(..., description=\"The name of the project\"\
+      )\n    directory_structure: List[str] = (\n        Field(..., description=\"\
+      A list of key directories in the project structure\")\n    )\n    file_list:\
+      \ List[str] = (\n        Field(..., description=\"A list of key files in the\
+      \ project structure\")\n    )\n    is_valid: bool = (\n        Field(..., description=\"\
+      Whether the project structure is valid\")\n    )\n\n\ndef set_up_project_structure(choose_framework_input:\
+      \ ChooseFrameworkOutput, **kwargs) -> SetUpProjectStructureOutput:\n    \"\"\
+      \"\n    Sets up a basic project structure for the shopping app based on the\
+      \ chosen\n    framework.\n\n    Parameters\n    ----------\n    chosen_framework\
+      \ : str\n        The chosen framework for the shopping app\n    project_name\
+      \ : str\n        The name of the project\n\n    Returns\n    -------\n    dict\n\
+      \        A dictionary containing the project name, directory structure, file\n\
+      \        list, and validity of the project structure\n\n    Raises\n    ------\n\
+      \    ValueError\n        If the chosen framework or project name is invalid\n\
+      \n    Examples\n    --------\n    >>> set_up_project_structure(chosen_framework='React\
+      \ Native',\n    project_name='ShoppingApp')\n    >>> print(output['project_name'])\
+      \  # Output: ShoppingApp\n    >>> print(output['directory_structure'])  # Output:\
+      \ ['src', 'tests', 'docs']\n    >>> print(output['file_list'])  # Output: ['index.js',\
+      \ 'App.js',\n    'package.json']\n    >>> print(output['is_valid'])  # Output:\
+      \ True\n    {'project_name': 'ShoppingApp', 'directory_structure': ['src', 'tests',\n\
+      \    'docs'], 'file_list': ['index.js', 'App.js', 'package.json'], 'is_valid':\n\
+      \    True}\n\n    \"\"\"\n    return SetUpProjectStructureOutput(\n        project_name=\"\
+      \",\n        directory_structure=[],\n        file_list=[],\n        is_valid=False,\n\
+      \    )"
     name: set_up_project_structure
     nodes_depended_on:
     - choose_framework
@@ -364,10 +607,52 @@ nodes:
           chosen framework.
     prompt: Using the chosen framework, outline a basic project structure (e.g., folders,
       files). Provide a numbered list of key directories and their contents.
+    shims: []
   write_product_listing_logic:
     agent: false
+    code_node_type: stub
     description: Implement the business logic for listing products in the shopping
       app.
+    implementation: "from pydantic import BaseModel, Field\nfrom typing import List\n\
+      \n\nclass SetUpProjectStructureOutput(BaseModel):\n    \"\"\"Pydantic model\
+      \ for set_up_project_structure node outputs.\"\"\"\n    project_name: str =\
+      \ Field(..., description=\"The name of the project\")\n    directory_structure:\
+      \ List[str] = (\n        Field(..., description=\"A list of key directories\
+      \ in the project structure\")\n    )\n    file_list: List[str] = (\n       \
+      \ Field(..., description=\"A list of key files in the project structure\")\n\
+      \    )\n    is_valid: bool = (\n        Field(..., description=\"Whether the\
+      \ project structure is valid\")\n    )\n\n\nclass WriteProductListingLogicOutput(BaseModel):\n\
+      \    \"\"\"Pydantic model for write_product_listing_logic node outputs.\"\"\"\
+      \n    product_list: List[str] = Field(..., description=\"List of product names\"\
+      )\n    product_descriptions: List[str] = (\n        Field(..., description=\"\
+      List of product descriptions\")\n    )\n    product_prices: List[float] = (\n\
+      \        Field(..., description=\"List of product prices\")\n    )\n    is_product_listing_successful:\
+      \ bool = (\n        Field(..., description=\"Whether the product listing logic\
+      \ was successfully implemented\")\n    )\n\n\ndef write_product_listing_logic(set_up_project_structure_input:\
+      \ SetUpProjectStructureOutput, **kwargs) -> WriteProductListingLogicOutput:\n\
+      \    \"\"\"\n    Fetches product data and returns structured lists of names,\
+      \ descriptions,\n    and prices.\n\n    Parameters\n    ----------\n    project_name\
+      \ : str\n        Name of the shopping app project.\n    directory_structure\
+      \ : List[str]\n        List of key directories in the project structure.\n \
+      \   file_list : List[str]\n        List of key files in the project structure.\n\
+      \    is_valid : bool\n        Validity flag of the project structure generated\
+      \ by\n        set_up_project_structure.\n\n    Returns\n    -------\n    dict\n\
+      \        A dictionary containing product_list, product_descriptions,\n     \
+      \   product_prices, and is_product_listing_successful.\n\n    Raises\n    ------\n\
+      \    ValueError\n        Raised when the project structure is invalid (is_valid\
+      \ is False).\n\n    Examples\n    --------\n    >>> output = write_product_listing_logic(\n\
+      \    ...     project_name='ShopApp',\n    ...     directory_structure=['src',\
+      \ 'tests'],\n    ...     file_list=['main.py', 'utils.py'],\n    ...     is_valid=True\n\
+      \    >>> )\n    {\n      'product_list': [],\n      'product_descriptions':\
+      \ [],\n      'product_prices': [],\n      'is_product_listing_successful': True\n\
+      \    }\n\n    >>> output = write_product_listing_logic(\n    ...     project_name='ShopApp',\n\
+      \    ...     directory_structure=['src', 'tests'],\n    ...     file_list=['main.py',\
+      \ 'utils.py'],\n    ...     is_valid=True\n    >>> )\n    {\n      'product_list':\
+      \ ['T-Shirt', 'Jeans'],\n      'product_descriptions': ['Cotton T-Shirt', 'Denim\
+      \ Jeans'],\n      'product_prices': [19.99, 49.99],\n      'is_product_listing_successful':\
+      \ True\n    }\n\n    \"\"\"\n    return WriteProductListingLogicOutput(\n  \
+      \      product_list=[],\n        product_descriptions=[],\n        product_prices=[],\n\
+      \        is_product_listing_successful=False,\n    )"
     name: write_product_listing_logic
     nodes_depended_on:
     - set_up_project_structure
@@ -434,3 +719,4 @@ nodes:
     prompt: Develop the business logic for listing products (e.g., fetching data from
       API, displaying product information). Focus only on product listing. Use a suitable
       programming language and the set framework.
+    shims: []
