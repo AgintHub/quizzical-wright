@@ -1,6 +1,5 @@
-dag_type: plain_text
-description: Create a code base for a shopping app with UI/UX features, product listing,
-  payment integration, and customer authentication.
+dag_type: typed
+description: Generated workflow from UI.
 name: shopping_app_code_base
 nodes:
   add_payment_integration:
@@ -10,6 +9,20 @@ nodes:
     nodes_depended_on:
     - write_product_listing_logic
     nodes_dependent_on: []
+    output_structure:
+    - description: The name of the integrated payment gateway
+      key: payment_gateway
+      type: str
+    - description: Whether the transaction processing logic has been successfully
+        implemented
+      key: transaction_processing_status
+      type: bool
+    - description: Whether the receipt generation logic has been successfully implemented
+      key: receipt_generation_status
+      type: bool
+    - description: List of supported payment methods (e.g., credit card, PayPal, etc.)
+      key: supported_payment_methods
+      type: List[str]
     prompt: Add payment integration using a suitable payment gateway (e.g., Stripe,
       PayPal). Focus on implementing the necessary logic for processing transactions
       and sending receipts.
@@ -20,6 +33,17 @@ nodes:
     nodes_depended_on:
     - plan_shopping_app_features
     nodes_dependent_on: []
+    output_structure:
+    - description: The chosen tech stack for the shopping app (e.g., React Native,
+        Flutter)
+      key: tech_stack
+      type: str
+    - description: The chosen framework for the shopping app
+      key: framework
+      type: str
+    - description: A 2-sentence justification for the chosen tech stack and framework
+      key: justification
+      type: str
     prompt: Based on the identified features, select and specify a suitable tech stack
       (e.g., React Native, Flutter) and framework for building the shopping app. Provide
       a 2-sentence justification.
@@ -30,6 +54,22 @@ nodes:
     nodes_depended_on:
     - implement_customer_auth
     nodes_dependent_on: []
+    output_structure:
+    - description: Name of the UI component created (e.g., product card, navigation
+        menu)
+      key: ui_component_name
+      type: str
+    - description: Library or framework used to develop the UI component (e.g., Material-UI,
+        Bootstrap)
+      key: ui_component_library
+      type: str
+    - description: Screenshot of the created UI component
+      key: ui_component_screenshot
+      type: str
+    - description: List of features implemented in the UI component (e.g., responsiveness,
+        accessibility)
+      key: ui_component_features
+      type: List[str]
     prompt: Develop a simple UI component (e.g., card, list item) using a suitable
       library or framework (e.g., Material-UI, Bootstrap). Focus only on UI/UX design.
       Provide a screenshot of the created component.
@@ -41,6 +81,23 @@ nodes:
     nodes_depended_on:
     - add_payment_integration
     nodes_dependent_on: []
+    output_structure:
+    - description: Type of authentication system implemented (e.g., local, OAuth,
+        OpenID)
+      key: auth_system_type
+      type: str
+    - description: Whether login functionality is successfully implemented
+      key: login_functionality
+      type: bool
+    - description: Whether registration functionality is successfully implemented
+      key: registration_functionality
+      type: bool
+    - description: Whether logout functionality is successfully implemented
+      key: logout_functionality
+      type: bool
+    - description: List of authorization methods used (e.g., session-based, token-based)
+      key: authorization_methods
+      type: List[str]
     prompt: Use a library or framework function to implement a basic customer authentication
       (e.g., login, registration, logout). Focus only on authentication and authorization.
       Provide a 1-2 sentence justification.
@@ -50,10 +107,20 @@ nodes:
     name: integrate_ui_component
     nodes_depended_on:
     - create_ui_component
-    nodes_dependent_on:
-    - write_product_listing_logic
-    - add_payment_integration
-    - implement_customer_auth
+    nodes_dependent_on: []
+    output_structure:
+    - description: Screenshot of the integrated UI component
+      key: integrated_ui_screenshot
+      type: str
+    - description: Whether product listing is successfully rendered
+      key: rendered_product_listing
+      type: bool
+    - description: Status of payment processing integration
+      key: payment_processing_status
+      type: str
+    - description: List of core features implemented in the UI component
+      key: core_featuresimplemented
+      type: List[str]
     prompt: Use the developed logic to integrate the UI component (e.g., render product
       listing, handle payment processing). Focus on integrating core features and
       functionality. Provide a screenshot of the integrated UI.
@@ -64,6 +131,13 @@ nodes:
     name: plan_shopping_app_features
     nodes_depended_on: []
     nodes_dependent_on: []
+    output_structure:
+    - description: List of must-have features for a basic shopping app
+      key: essential_features
+      type: List[str]
+    - description: Total number of essential features
+      key: feature_count
+      type: int
     prompt: Describe the must-have features for a basic shopping app. Provide a numbered
       list.
   set_up_project_structure:
@@ -73,6 +147,19 @@ nodes:
     nodes_depended_on:
     - choose_framework
     nodes_dependent_on: []
+    output_structure:
+    - description: The name of the project
+      key: project_name
+      type: str
+    - description: A list of key directories in the project structure
+      key: directory_structure
+      type: List[str]
+    - description: A list of key files in the project structure
+      key: file_list
+      type: List[str]
+    - description: Whether the project structure is valid
+      key: is_valid
+      type: bool
     prompt: Using the chosen framework, outline a basic project structure (e.g., folders,
       files). Provide a numbered list of key directories and their contents.
   write_product_listing_logic:
@@ -83,6 +170,19 @@ nodes:
     nodes_depended_on:
     - set_up_project_structure
     nodes_dependent_on: []
+    output_structure:
+    - description: List of product names
+      key: product_list
+      type: List[str]
+    - description: List of product descriptions
+      key: product_descriptions
+      type: List[str]
+    - description: List of product prices
+      key: product_prices
+      type: List[float]
+    - description: Whether the product listing logic was successfully implemented
+      key: is_product_listing_successful
+      type: bool
     prompt: Develop the business logic for listing products (e.g., fetching data from
       API, displaying product information). Focus only on product listing. Use a suitable
       programming language and the set framework.
